@@ -79,7 +79,10 @@ void ofNotifySetup(){
 
 //------------------------------------------
 void ofNotifyUpdate(){
-	ofGetCurrentRenderer()->update();
+    ofPtr<ofBaseRenderer> ofRenderer = ofGetCurrentRenderer();
+    if ( ofRenderer ){
+        ofRenderer->update();
+    }
 
 	ofBaseApp * ofAppPtr = ofGetAppPtr();
 	
