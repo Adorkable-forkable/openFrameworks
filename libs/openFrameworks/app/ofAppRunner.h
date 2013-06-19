@@ -8,6 +8,7 @@
 class ofAppBaseWindow;
 class ofBaseApp;
 
+void 		ofSetupWindow(ofPtr<ofAppBaseWindow> windowPtr);
 void 		ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMode);	// sets up the opengl context!
 void 		ofSetupOpenGL(ofAppBaseWindow * windowPtr, int w, int h, int screenMode); // this is deprecated, use an ofPtr
 void 		ofSetupOpenGL(int w, int h, int screenMode);	// sets up the opengl context!

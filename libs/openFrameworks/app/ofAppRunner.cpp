@@ -81,8 +81,14 @@ void ofRunApp(ofBaseApp * OFSA){
 }
 
 //--------------------------------------
-void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMode){
+void ofSetupWindow(ofPtr<ofAppBaseWindow> windowPtr)
+{
 	window = windowPtr;
+}
+
+//--------------------------------------
+void ofSetupOpenGL(ofPtr<ofAppBaseWindow> windowPtr, int w, int h, int screenMode){
+    ofSetupWindow( windowPtr );
 	window->setupOpenGL(w, h, screenMode);
 	
 #ifndef TARGET_OPENGLES
