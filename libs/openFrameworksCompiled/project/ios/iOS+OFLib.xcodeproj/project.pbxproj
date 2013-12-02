@@ -998,9 +998,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BB24DE5C10DA7A3F00E9C588 /* iPhone+OF Static Library */ = {
+		BB24DE5C10DA7A3F00E9C588 /* iOS+OF Static Library */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB24DED210DA7A3F00E9C588 /* Build configuration list for PBXNativeTarget "iPhone+OF Static Library" */;
+			buildConfigurationList = BB24DED210DA7A3F00E9C588 /* Build configuration list for PBXNativeTarget "iOS+OF Static Library" */;
 			buildPhases = (
 				BB24DE5D10DA7A3F00E9C588 /* Headers */,
 				BB24DEB110DA7A3F00E9C588 /* Sources */,
@@ -1010,7 +1010,7 @@
 			);
 			dependencies = (
 			);
-			name = "iPhone+OF Static Library";
+			name = "iOS+OF Static Library";
 			productName = "Static Library";
 			productReference = BB24DED610DA7A3F00E9C588 /* libofxiOS_iphoneos_Debug.a */;
 			productType = "com.apple.product-type.library.static";
@@ -1037,7 +1037,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BB24DE5C10DA7A3F00E9C588 /* iPhone+OF Static Library */,
+				BB24DE5C10DA7A3F00E9C588 /* iOS+OF Static Library */,
 			);
 		};
 /* End PBXProject section */
@@ -1224,7 +1224,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BB24DED210DA7A3F00E9C588 /* Build configuration list for PBXNativeTarget "iPhone+OF Static Library" */ = {
+		BB24DED210DA7A3F00E9C588 /* Build configuration list for PBXNativeTarget "iOS+OF Static Library" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB24DED310DA7A3F00E9C588 /* Debug */,
