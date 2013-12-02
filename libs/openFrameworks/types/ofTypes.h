@@ -6,18 +6,17 @@
 #if (_MSC_VER)
 #include <memory>
 #else
-#include <tr1/memory>
+#include <memory>
 // import smart pointers utils into std
 namespace std {
 #if __cplusplus<201103L
-	using std::tr1::shared_ptr;
-	using std::tr1::weak_ptr;
-	using std::tr1::enable_shared_from_this;
+	using std::shared_ptr;
+	using std::weak_ptr;
+	using std::enable_shared_from_this;
 #endif
-	using std::tr1::static_pointer_cast;
-	using std::tr1::dynamic_pointer_cast;
-	using std::tr1::const_pointer_cast;
-	using std::tr1::__dynamic_cast_tag;
+	using std::static_pointer_cast;
+	using std::dynamic_pointer_cast;
+	using std::const_pointer_cast;
 }
 #endif
 
@@ -182,16 +181,6 @@ public:
 		ofPtr(const std::weak_ptr<Tp1>& __r)
 	: std::shared_ptr<T>(__r) { }
 
-	// tgfrerer: extends ofPtr facade to allow dynamic_pointer_cast, pt.1
-#if (_MSC_VER)
-	template<typename Tp1>
-	ofPtr(const ofPtr<Tp1>& __r, std::_Dynamic_tag)
-	: std::shared_ptr<T>(__r, std:::_Dynamic_tag()) { }
-#else
-	template<typename Tp1>
-	ofPtr(const ofPtr<Tp1>& __r, std::__dynamic_cast_tag)
-	: std::shared_ptr<T>(__r, std::__dynamic_cast_tag()) { }
-#endif
 	  /*template<typename Tp1, typename Del>
 		explicit
 		ofPtr(const std::tr1::unique_ptr<Tp1, Del>&) = delete;
@@ -208,60 +197,54 @@ public:
     }
 };
 
-// tgfrerer: extends ofPtr facade to allow dynamic_pointer_cast, pt. 2
-#if (_MSC_VER)
-template<typename _Tp, typename _Tp1>
-ofPtr<_Tp>
-	dynamic_pointer_cast(const ofPtr<_Tp1>& __r)
-{ return ofPtr<_Tp>(__r, std::_Dynamic_tag()); }
-#else
-template<typename _Tp, typename _Tp1>
-ofPtr<_Tp>
-	dynamic_pointer_cast(const ofPtr<_Tp1>& __r)
-{ return ofPtr<_Tp>(__r, std::__dynamic_cast_tag()); }
-#endif
+template<class _Tp, class _Up>
+ofPtr<_Tp> dynamic_pointer_cast(const ofPtr<_Up>& __r)
+{
+    _Tp* __p = dynamic_cast<_Tp*>(__r.get());
+    return __p ? ofPtr<_Tp>(__r, __p) : ofPtr<_Tp>();
+}
 
 //----------------------------------------------------------
 // ofPtrWeak
 //----------------------------------------------------------
 template <typename T>
-class ofPtrWeak: public std::tr1::weak_ptr<T>
+class ofPtrWeak: public std::weak_ptr<T>
 {
 public:
     
 	ofPtrWeak()
-    : std::tr1::weak_ptr<T>() { }
+    : std::weak_ptr<T>() { }
     
     template<typename Tp1>
     explicit
     ofPtrWeak(Tp1* __p)
-	: std::tr1::weak_ptr<T>(__p) { }
+	: std::weak_ptr<T>(__p) { }
     
     template<typename Tp1, typename _Deleter>
     ofPtrWeak(Tp1* __p, _Deleter __d)
-	: std::tr1::weak_ptr<T>(__p, __d) { }
+	: std::weak_ptr<T>(__p, __d) { }
     
     template<typename Tp1, typename _Deleter, typename _Alloc>
     ofPtrWeak(Tp1* __p, _Deleter __d, const _Alloc& __a)
-	: std::tr1::weak_ptr<T>(__p, __d, __a) { }
+	: std::weak_ptr<T>(__p, __d, __a) { }
     
     // Aliasing constructor
     template<typename Tp1>
     ofPtrWeak(const ofPtrWeak<Tp1>& __r, T* __p)
-	: std::tr1::weak_ptr<T>(__r, __p) { }
+	: std::weak_ptr<T>(__r, __p) { }
     
     template<typename Tp1>
     ofPtrWeak(const ofPtrWeak<Tp1>& __r)
-	: std::tr1::weak_ptr<T>(__r) { }
+	: std::weak_ptr<T>(__r) { }
     
     template<typename Tp1>
     ofPtrWeak(const ofPtr<Tp1>& __r)
-    : std::tr1::weak_ptr<T>(__r) { }
+    : std::weak_ptr<T>(__r) { }
     
     template<typename Tp1>
     explicit
-    ofPtrWeak(const std::tr1::shared_ptr<Tp1>& __r)
-	: std::tr1::weak_ptr<T>(__r) { }    
+    ofPtrWeak(const std::shared_ptr<Tp1>& __r)
+	: std::weak_ptr<T>(__r) { }
     
     ofPtr<T> 
     lock() const
@@ -281,8 +264,8 @@ public:
     }
 };
     
-template< typename _Tp, typename _Tp1 >
-ofPtr< _Tp > dynamic_pointer_cast( const ofPtrWeak< _Tp1 >& __r )
-{ 
-    return ofPtr< _Tp >( __r.lock(), std::tr1::__dynamic_cast_tag() ); 
+template< typename _Tp, typename _Up >
+ofPtr< _Tp > dynamic_pointer_cast( const ofPtrWeak< _Up >& __r )
+{
+    return dynamic_pointer_cast< _Tp >( __r.lock() );
 }
